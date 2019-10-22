@@ -66,6 +66,7 @@ export default class TabView<T extends Route> extends React.Component<
     springConfig: {},
     timingConfig: {},
     gestureHandlerProps: {},
+    backend: Pager,
   };
 
   state = {
@@ -118,12 +119,28 @@ export default class TabView<T extends Route> extends React.Component<
       style,
       gestureHandlerProps,
       springVelocityScale,
+      backend: Backend,
     } = this.props;
     const { layout } = this.state;
 
     return (
       <View onLayout={this.handleLayout} style={[styles.pager, style]}>
-        <Pager
+        <Backend
+          navigationState={navigationState}
+          layout={layout}
+          keyboardDismissMode={keyboardDismissMode}
+          swipeEnabled={swipeEnabled}
+          swipeVelocityImpact={swipeVelocityImpact} //
+          timingConfig={timingConfig} //
+          springConfig={springConfig} //
+          onSwipeStart={onSwipeStart}
+          onSwipeEnd={onSwipeEnd}
+          onIndexChange={this.jumpToIndex}
+          springVelocityScale={springVelocityScale} //
+          removeClippedSubviews={removeClippedSubviews}
+          gestureHandlerProps={gestureHandlerProps} //
+        >
+          {/* <Pager
           navigationState={navigationState}
           layout={layout}
           keyboardDismissMode={keyboardDismissMode}
@@ -137,7 +154,7 @@ export default class TabView<T extends Route> extends React.Component<
           springVelocityScale={springVelocityScale}
           removeClippedSubviews={removeClippedSubviews}
           gestureHandlerProps={gestureHandlerProps}
-        >
+        > */}
           {({ position, render, addListener, removeListener, jumpTo }) => {
             // All of the props here must not change between re-renders
             // This is crucial to optimizing the routes with PureComponent
@@ -193,7 +210,8 @@ export default class TabView<T extends Route> extends React.Component<
               </React.Fragment>
             );
           }}
-        </Pager>
+        </Backend>
+        {/* </Pager> */}
       </View>
     );
   }
