@@ -1,30 +1,46 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, Keyboard, I18nManager, View, Text } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import Animated, { Easing } from 'react-native-reanimated';
-import memoize from './memoize';
 import ViewPager from '@react-native-community/viewpager';
 
-import {
-  Layout,
-  NavigationState,
-  Route,
-  Listener,
-  PagerCommonProps,
-  EventEmitterProps,
-} from './types';
+import { PagerCommonProps } from './types';
 
-class ViewPagerBackend = () => {
-  return (
-    <ViewPager style={styles.viewPager} initialPage={0}>
-      <View key="1">
-        <Text>First page</Text>
-      </View>
-      <View key="2">
-        <Text>Second page</Text>
-      </View>
-    </ViewPager>
-  );
+type Props<T extends Route> = PagerCommonProps & {
+  onIndexChange: (index: number) => void;
 };
+
+class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
+  // onScrollStateChange (state -> drag : idle)
+  render() {
+    const {
+      onSwipeStart,
+      onSwipeEnd,
+      keyboardDismissMode,
+      // children,
+    } = this.props;
+    return (
+      <ViewPager
+        initialPage={0}
+        keyboardDismissMode={
+          // ViewPager does not accept auto mode
+          keyboardDismissMode === 'auto' ? 'on-drag' : keyboardDismissMode
+        }
+        onPageScrollStateChanged={onIndexChange}
+        // onPageScroll={onSwipeStart}
+        // onPageSelected={onSwipeEnd}
+        orientation="horizontal"
+        transitionStyle="scroll"
+      >
+        {React.Children.map(children, (child, index) =>
+          React.isValidElement(child) ? (
+            <>
+              {React.cloneElement(child, {
+                key: index,
+              })}
+            </>
+          ) : null
+        )}
+      </ViewPager>
+    );
+  }
+}
 
 export default ViewPagerBackend;
