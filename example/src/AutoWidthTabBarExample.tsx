@@ -6,7 +6,9 @@ import {
   SceneMap,
   NavigationState,
   SceneRendererProps,
+  ViewPagerBackend,
 } from 'react-native-tab-view';
+// import ViewPagerBackend from 'react-native-tab-view';
 import Article from './Shared/Article';
 import Albums from './Shared/Albums';
 import Chat from './Shared/Chat';
@@ -72,6 +74,7 @@ export default class DynamicWidthTabBarExample extends React.Component<
         renderScene={this.renderScene}
         renderTabBar={this.renderTabBar}
         onIndexChange={this.handleIndexChange}
+        backend={ViewPagerBackend}
       />
     );
   }

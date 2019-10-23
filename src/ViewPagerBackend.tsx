@@ -5,17 +5,13 @@ import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
 import {
-  PagerCommonProps,
-  Listener,
-  Route,
   Layout,
   NavigationState,
+  Route,
+  Listener,
+  PagerCommonProps,
+  EventEmitterProps,
 } from './types';
-
-type EventEmitterProps = {
-  addListener: (type: 'enter', listener: Listener) => void;
-  removeListener: (type: 'enter', listener: Listener) => void;
-};
 
 type Props<T extends Route> = PagerCommonProps & {
   onIndexChange: (index: number) => void;
@@ -46,7 +42,9 @@ const UNSET = -1;
 
 const DIRECTION_RIGHT = -1;
 
-export default class Pager<T extends Route> extends React.Component<Props<T>> {
+export default class ViewPagerBackend<T extends Route> extends React.Component<
+  Props<T>
+> {
   static defaultProps = {
     onIndexChange: () => {},
     swipeEnabled: true,
