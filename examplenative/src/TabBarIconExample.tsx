@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {StyleSheet} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 import {
   TabView,
   TabBar,
@@ -28,9 +28,9 @@ export default class TabBarIconExample extends React.Component<{}, State> {
   state = {
     index: 0,
     routes: [
-      { key: 'chat', icon: 'md-chatbubbles' },
-      { key: 'contacts', icon: 'md-contact' },
-      { key: 'article', icon: 'md-list' },
+      {key: 'chat', icon: 'md-chatbubbles'},
+      {key: 'contacts', icon: 'md-contact'},
+      {key: 'article', icon: 'md-list'},
     ],
   };
 
@@ -39,12 +39,12 @@ export default class TabBarIconExample extends React.Component<{}, State> {
       index,
     });
 
-  private renderIcon = ({ route, color }: { route: Route; color: string }) => (
+  private renderIcon = ({route, color}: {route: Route; color: string}) => (
     <Ionicons name={route.icon} size={24} color={color} />
   );
 
   private renderTabBar = (
-    props: SceneRendererProps & { navigationState: State }
+    props: SceneRendererProps & {navigationState: State},
   ) => {
     return (
       <TabBar

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   TabView,
   TabBar,
@@ -29,10 +29,10 @@ export default class ScrollableTabBarExample extends React.Component<
   state = {
     index: 1,
     routes: [
-      { key: 'article', title: 'Article' },
-      { key: 'contacts', title: 'Contacts' },
-      { key: 'albums', title: 'Albums' },
-      { key: 'chat', title: 'Chat' },
+      {key: 'article', title: 'Article'},
+      {key: 'contacts', title: 'Contacts'},
+      {key: 'albums', title: 'Albums'},
+      {key: 'chat', title: 'Chat'},
     ],
   };
 
@@ -42,7 +42,7 @@ export default class ScrollableTabBarExample extends React.Component<
     });
 
   private renderTabBar = (
-    props: SceneRendererProps & { navigationState: State }
+    props: SceneRendererProps & {navigationState: State},
   ) => (
     <TabBar
       {...props}

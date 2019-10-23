@@ -13,10 +13,6 @@ import {
   I18nManager,
   AppRegistry,
 } from 'react-native';
-import {name as appName} from './app.json';
-// import {Asset} from 'expo-asset';
-// import {useKeepAwake} from 'expo-keep-awake';
-import {Ionicons} from 'react-native-ionicons';
 import ScrollableTabBarExample from './ScrollableTabBarExample';
 import AutoWidthTabBarExample from './AutoWidthTabBarExample';
 import TabBarIconExample from './TabBarIconExample';
@@ -54,11 +50,6 @@ const EXAMPLE_COMPONENTS: ExampleComponentType[] = [
 ];
 
 const STATUSBAR_HEIGHT = 24;
-
-const KeepAwake = () => {
-  // useKeepAwake();
-  return null;
-};
 
 export default class ExampleList extends React.Component<any, State> {
   state = {
@@ -188,15 +179,7 @@ export default class ExampleList extends React.Component<any, State> {
                 <TouchableOpacity
                   style={styles.button}
                   onPress={this.handleNavigateBack}>
-                  <Ionicons
-                    name={
-                      Platform.OS === 'android'
-                        ? 'md-arrow-back'
-                        : 'ios-arrow-back'
-                    }
-                    size={24}
-                    color={tintColor}
-                  />
+                  <Text>Back</Text>
                 </TouchableOpacity>
               ) : null}
               <Text
@@ -263,4 +246,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent('examplenative', () => ExampleList);

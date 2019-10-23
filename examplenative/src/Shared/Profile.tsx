@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
 
 export default class Profile extends React.Component {
   render() {
     return (
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.content}
-      >
+        contentContainerStyle={styles.content}>
         <View style={styles.author}>
           <Image
             style={styles.avatar}

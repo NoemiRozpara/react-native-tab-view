@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   TabView,
   TabBar,
@@ -8,7 +8,6 @@ import {
   SceneRendererProps,
   ViewPagerBackend,
 } from 'react-native-tab-view';
-// import ViewPagerBackend from 'react-native-tab-view';
 import Article from './Shared/Article';
 import Albums from './Shared/Albums';
 import Chat from './Shared/Chat';
@@ -31,12 +30,12 @@ export default class DynamicWidthTabBarExample extends React.Component<
   state = {
     index: 1,
     routes: [
-      { key: 'article', title: 'Article' },
-      { key: 'contacts', title: 'Contacts' },
-      { key: 'albums', title: 'Albums' },
-      { key: 'chat', title: 'Chat' },
-      { key: 'long', title: 'long long long title' },
-      { key: 'medium', title: 'medium title' },
+      {key: 'article', title: 'Article'},
+      {key: 'contacts', title: 'Contacts'},
+      {key: 'albums', title: 'Albums'},
+      {key: 'chat', title: 'Chat'},
+      {key: 'long', title: 'long long long title'},
+      {key: 'medium', title: 'medium title'},
     ],
   };
 
@@ -46,7 +45,7 @@ export default class DynamicWidthTabBarExample extends React.Component<
     });
 
   private renderTabBar = (
-    props: SceneRendererProps & { navigationState: State }
+    props: SceneRendererProps & {navigationState: State},
   ) => (
     <TabBar
       {...props}

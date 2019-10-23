@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, I18nManager } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {View, Text, StyleSheet, I18nManager} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 import {
   TabView,
   TabBar,
@@ -57,9 +57,9 @@ export default class CustomIndicatorExample extends React.Component<{}, State> {
     props: SceneRendererProps & {
       navigationState: State;
       getTabWidth: (i: number) => number;
-    }
+    },
   ) => {
-    const { position, navigationState, getTabWidth } = props;
+    const {position, navigationState, getTabWidth} = props;
     const inputRange = [
       0,
       0.48,
@@ -98,7 +98,7 @@ export default class CustomIndicatorExample extends React.Component<{}, State> {
     const backgroundColor = Animated.interpolate(position, {
       inputRange,
       outputRange: inputRange.map(x =>
-        Animated.color(...navigationState.routes[Math.round(x)].color)
+        Animated.color(...navigationState.routes[Math.round(x)].color),
       ),
     });
 
@@ -108,25 +108,24 @@ export default class CustomIndicatorExample extends React.Component<{}, State> {
           styles.container,
           {
             width: `${100 / navigationState.routes.length}%`,
-            transform: [{ translateX }] as any,
+            transform: [{translateX}] as any,
           },
-        ]}
-      >
+        ]}>
         <Animated.View
           style={[
             styles.indicator,
-            { opacity, backgroundColor, transform: [{ scale }] } as any,
+            {opacity, backgroundColor, transform: [{scale}]} as any,
           ]}
         />
       </Animated.View>
     );
   };
 
-  private renderIcon = ({ route }: { route: Route }) => (
+  private renderIcon = ({route}: {route: Route}) => (
     <Ionicons name={route.icon} size={24} style={styles.icon} />
   );
 
-  private renderBadge = ({ route }: { route: Route }) => {
+  private renderBadge = ({route}: {route: Route}) => {
     if (route.key === 'albums') {
       return (
         <View style={styles.badge}>
@@ -138,7 +137,7 @@ export default class CustomIndicatorExample extends React.Component<{}, State> {
   };
 
   private renderTabBar = (
-    props: SceneRendererProps & { navigationState: State }
+    props: SceneRendererProps & {navigationState: State},
   ) => (
     <TabBar
       {...props}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import {View, Text, TouchableWithoutFeedback, StyleSheet} from 'react-native';
 import {
   TabView,
   SceneMap,
@@ -7,7 +7,7 @@ import {
   SceneRendererProps,
 } from 'react-native-tab-view';
 import Animated from 'react-native-reanimated';
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 import Albums from './Shared/Albums';
 import Article from './Shared/Article';
 import Chat from './Shared/Chat';
@@ -32,10 +32,10 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
   state = {
     index: 0,
     routes: [
-      { key: 'contacts', title: 'Contacts', icon: 'ios-people' },
-      { key: 'albums', title: 'Albums', icon: 'ios-albums' },
-      { key: 'article', title: 'Article', icon: 'ios-paper' },
-      { key: 'chat', title: 'Chat', icon: 'ios-chatboxes' },
+      {key: 'contacts', title: 'Contacts', icon: 'ios-people'},
+      {key: 'albums', title: 'Albums', icon: 'ios-albums'},
+      {key: 'article', title: 'Article', icon: 'ios-paper'},
+      {key: 'chat', title: 'Chat', icon: 'ios-chatboxes'},
     ],
   };
 
@@ -50,7 +50,7 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
   }: {
     navigationState: State;
     position: Animated.Node<number>;
-  }) => ({ route, index }: { route: Route; index: number }) => {
+  }) => ({route, index}: {route: Route; index: number}) => {
     const inputRange = navigationState.routes.map((_, i) => i);
 
     const activeOpacity = Animated.interpolate(position, {
@@ -64,7 +64,7 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
 
     return (
       <View style={styles.tab}>
-        <Animated.View style={[styles.item, { opacity: inactiveOpacity }]}>
+        <Animated.View style={[styles.item, {opacity: inactiveOpacity}]}>
           <Ionicons
             name={route.icon}
             size={26}
@@ -73,8 +73,7 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
           <Text style={[styles.label, styles.inactive]}>{route.title}</Text>
         </Animated.View>
         <Animated.View
-          style={[styles.item, styles.activeItem, { opacity: activeOpacity }]}
-        >
+          style={[styles.item, styles.activeItem, {opacity: activeOpacity}]}>
           <Ionicons
             name={route.icon}
             size={26}
@@ -87,16 +86,15 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
   };
 
   private renderTabBar = (
-    props: SceneRendererProps & { navigationState: State }
+    props: SceneRendererProps & {navigationState: State},
   ) => (
     <View style={styles.tabbar}>
       {props.navigationState.routes.map((route: Route, index: number) => {
         return (
           <TouchableWithoutFeedback
             key={route.key}
-            onPress={() => props.jumpTo(route.key)}
-          >
-            {this.renderItem(props)({ route, index })}
+            onPress={() => props.jumpTo(route.key)}>
+            {this.renderItem(props)({route, index})}
           </TouchableWithoutFeedback>
         );
       })}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Keyboard } from 'react-native';
-// import ViewPager from '@react-native-community/viewpager';
-const ViewPager = require('@react-native-community/viewpager');
+import ViewPager from '@react-native-community/viewpager';
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 
@@ -136,13 +135,12 @@ export default class ViewPagerBackend<T extends Route> extends React.Component<
     );
   };
 
-  onPageScrollStateChanged = e => {
-    const state = e.nativeEvent.state;
+  onPageScrollStateChanged = (state: 'Idle' | 'Dragging' | 'Settling') => {
     switch (state) {
-      case 'settled':
+      case 'Settling':
         this.props.onSwipeEnd && this.props.onSwipeEnd();
         return;
-      case 'drag':
+      case 'Dragging':
         this.props.onSwipeStart && this.props.onSwipeStart();
         return;
     }
@@ -154,7 +152,7 @@ export default class ViewPagerBackend<T extends Route> extends React.Component<
       swipeEnabled,
       onIndexChange,
       children,
-      layout,
+      // layout,
     } = this.props;
 
     return children({
@@ -170,11 +168,11 @@ export default class ViewPagerBackend<T extends Route> extends React.Component<
             keyboardDismissMode === 'auto' ? 'on-drag' : keyboardDismissMode
           }
           onPageScroll={this.updatePosition}
-          onPageSelected={onIndexChange}
+          onPageSelected={e => onIndexChange(e.nativeEvent.position)}
           onPageScrollStateChanged={this.onPageScrollStateChanged}
           scrollEnabled={swipeEnabled}
-          orientation={layout.width > layout.height ? 'horizontal' : 'vertical'}
-          transitionStyle="scroll"
+          // orientation={layout.width > layout.height ? 'horizontal' : 'vertical'}
+          // transitionStyle="scroll"
         >
           {children}
         </ViewPager>

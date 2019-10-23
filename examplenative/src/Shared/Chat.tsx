@@ -21,8 +21,7 @@ export default class Chat extends React.Component {
       <View style={styles.container}>
         <ScrollView
           style={styles.inverted}
-          contentContainerStyle={styles.content}
-        >
+          contentContainerStyle={styles.content}>
           {MESSAGES.map((text, i) => {
             const odd = i % 2;
 
@@ -30,8 +29,7 @@ export default class Chat extends React.Component {
               <View
                 // eslint-disable-next-line react/no-array-index-key
                 key={i}
-                style={[odd ? styles.odd : styles.even, styles.inverted]}
-              >
+                style={[odd ? styles.odd : styles.even, styles.inverted]}>
                 <Image
                   style={styles.avatar}
                   source={
@@ -41,8 +39,7 @@ export default class Chat extends React.Component {
                   }
                 />
                 <View
-                  style={[styles.bubble, odd ? styles.received : styles.sent]}
-                >
+                  style={[styles.bubble, odd ? styles.received : styles.sent]}>
                   <Text style={odd ? styles.receivedText : styles.sentText}>
                     {text}
                   </Text>
@@ -67,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eceff1',
   },
   inverted: {
-    transform: [{ scaleY: -1 }],
+    transform: [{scaleY: -1}],
   },
   content: {
     padding: 16,

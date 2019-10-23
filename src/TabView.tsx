@@ -9,7 +9,6 @@ import {
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import TabBar, { Props as TabBarProps } from './TabBar';
-import Pager from './Pager';
 import ViewPagerBackend from './ViewPagerBackend';
 import SceneView from './SceneView';
 import {
@@ -67,7 +66,7 @@ type Props<T extends Route> = PagerCommonProps & {
   sceneContainerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   gestureHandlerProps: React.ComponentProps<typeof PanGestureHandler>;
-  backend: React.ComponentType<ChildProps>;
+  backend: React.ComponentType<ChildProps<T>>;
 };
 
 type State = {
@@ -92,7 +91,7 @@ export default class TabView<T extends Route> extends React.Component<
     springConfig: {},
     timingConfig: {},
     gestureHandlerProps: {},
-    backend: Pager,
+    backend: ViewPagerBackend,
   };
 
   state = {

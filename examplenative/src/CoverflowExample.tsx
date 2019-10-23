@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  ImageRequireSource,
-} from 'react-native';
-import { TabView, SceneRendererProps } from 'react-native-tab-view';
+import {View, Image, Text, StyleSheet, ImageRequireSource} from 'react-native';
+import {TabView, SceneRendererProps} from 'react-native-tab-view';
 import Animated from 'react-native-reanimated';
 
 type Route = {
@@ -19,7 +13,7 @@ type Props = SceneRendererProps & {
   route: Route;
 };
 
-const ALBUMS: { [key: string]: ImageRequireSource } = {
+const ALBUMS: {[key: string]: ImageRequireSource} = {
   'Abbey Road': require('../assets/album-art-1.jpg'),
   'Bat Out of Hell': require('../assets/album-art-2.jpg'),
   Homogenic: require('../assets/album-art-3.jpg'),
@@ -30,11 +24,11 @@ const ALBUMS: { [key: string]: ImageRequireSource } = {
   'Lost Horizons': require('../assets/album-art-8.jpg'),
 };
 
-const Scene = ({ route, position, layout, index, length }: Props) => {
+const Scene = ({route, position, layout, index, length}: Props) => {
   const coverflowStyle: any = React.useMemo(() => {
-    const { width } = layout;
+    const {width} = layout;
 
-    const inputRange = Array.from({ length }, (_, i) => i);
+    const inputRange = Array.from({length}, (_, i) => i);
     const translateOutputRange = inputRange.map(i => {
       return (width / 2) * (index - i) * -1;
     });
@@ -70,7 +64,7 @@ const Scene = ({ route, position, layout, index, length }: Props) => {
     });
 
     return {
-      transform: [{ translateX }, { scale }],
+      transform: [{translateX}, {scale}],
       opacity,
     };
   }, [index, layout, length, position]);
@@ -87,7 +81,7 @@ const Scene = ({ route, position, layout, index, length }: Props) => {
 
 export default function CoverflowExample() {
   const [index, onIndexChange] = React.useState(2);
-  const [routes] = React.useState(Object.keys(ALBUMS).map(key => ({ key })));
+  const [routes] = React.useState(Object.keys(ALBUMS).map(key => ({key})));
 
   return (
     <TabView
@@ -99,7 +93,7 @@ export default function CoverflowExample() {
       }}
       onIndexChange={onIndexChange}
       renderTabBar={() => null}
-      renderScene={(props: SceneRendererProps & { route: Route }) => (
+      renderScene={(props: SceneRendererProps & {route: Route}) => (
         <Scene
           {...props}
           index={routes.indexOf(props.route)}
