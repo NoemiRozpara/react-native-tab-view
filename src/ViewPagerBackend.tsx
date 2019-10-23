@@ -8,12 +8,23 @@ type Props<T extends Route> = PagerCommonProps & {
 };
 
 class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
-  // onScrollStateChange (state -> drag : idle)
+  onPageScrollStateChanged = e => {
+    switch (e.nativeEvent.state) {
+      case 'settled':
+        this.props.onSwipeEnd();
+        return;
+      case 'drag':
+        this.props.onSwipeStart();
+    }
+  };
+
   render() {
     const {
       onSwipeStart,
       onSwipeEnd,
       keyboardDismissMode,
+      swipeEnabled,
+      onIndexChange,
       // children,
     } = this.props;
     return (
@@ -24,12 +35,14 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
           keyboardDismissMode === 'auto' ? 'on-drag' : keyboardDismissMode
         }
         onPageScrollStateChanged={onIndexChange}
-        // onPageScroll={onSwipeStart}
-        // onPageSelected={onSwipeEnd}
+        // onPageScroll={update position reanimated}
+        onPageSelected={onIndexChange}
+        onPageScrollStateChanged={this.onPageScrollStateChanged}
+        scrollEnabled={swipeEnabled}
         orientation="horizontal"
         transitionStyle="scroll"
       >
-        {React.Children.map(children, (child, index) =>
+        {/* {React.Children.map(children, (child, index) =>
           React.isValidElement(child) ? (
             <>
               {React.cloneElement(child, {
@@ -37,7 +50,7 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
               })}
             </>
           ) : null
-        )}
+        )} */}
       </ViewPager>
     );
   }
