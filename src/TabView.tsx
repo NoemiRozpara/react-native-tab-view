@@ -130,21 +130,6 @@ export default class TabView<T extends Route> extends React.Component<
           layout={layout}
           keyboardDismissMode={keyboardDismissMode}
           swipeEnabled={swipeEnabled}
-          swipeVelocityImpact={swipeVelocityImpact} //
-          timingConfig={timingConfig} //
-          springConfig={springConfig} //
-          onSwipeStart={onSwipeStart}
-          onSwipeEnd={onSwipeEnd}
-          onIndexChange={this.jumpToIndex}
-          springVelocityScale={springVelocityScale} //
-          removeClippedSubviews={removeClippedSubviews}
-          gestureHandlerProps={gestureHandlerProps} //
-        >
-          {/* <Pager
-          navigationState={navigationState}
-          layout={layout}
-          keyboardDismissMode={keyboardDismissMode}
-          swipeEnabled={swipeEnabled}
           swipeVelocityImpact={swipeVelocityImpact}
           timingConfig={timingConfig}
           springConfig={springConfig}
@@ -154,7 +139,7 @@ export default class TabView<T extends Route> extends React.Component<
           springVelocityScale={springVelocityScale}
           removeClippedSubviews={removeClippedSubviews}
           gestureHandlerProps={gestureHandlerProps}
-        > */}
+        >
           {({ position, render, addListener, removeListener, jumpTo }) => {
             // All of the props here must not change between re-renders
             // This is crucial to optimizing the routes with PureComponent
