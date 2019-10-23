@@ -11,11 +11,11 @@ import {
   View,
   YellowBox,
   I18nManager,
+  AppRegistry,
 } from 'react-native';
-import {registerRootComponent} from 'expo';
-import {Asset} from 'expo-asset';
-import {useKeepAwake} from 'expo-keep-awake';
-import Constants from 'expo-constants';
+import {name as appName} from './app.json';
+// import {Asset} from 'expo-asset';
+// import {useKeepAwake} from 'expo-keep-awake';
 import {Ionicons} from 'react-native-ionicons';
 import ScrollableTabBarExample from './ScrollableTabBarExample';
 import AutoWidthTabBarExample from './AutoWidthTabBarExample';
@@ -53,8 +53,10 @@ const EXAMPLE_COMPONENTS: ExampleComponentType[] = [
   CoverflowExample,
 ];
 
+const STATUSBAR_HEIGHT = 24;
+
 const KeepAwake = () => {
-  useKeepAwake();
+  // useKeepAwake();
   return null;
 };
 
@@ -70,16 +72,16 @@ export default class ExampleList extends React.Component<any, State> {
       this.restoreNavigationState();
     }
 
-    [
-      require('../assets/album-art-1.jpg'),
-      require('../assets/album-art-2.jpg'),
-      require('../assets/album-art-3.jpg'),
-      require('../assets/album-art-4.jpg'),
-      require('../assets/album-art-5.jpg'),
-      require('../assets/album-art-6.jpg'),
-      require('../assets/album-art-7.jpg'),
-      require('../assets/album-art-8.jpg'),
-    ].map(image => Asset.fromModule(image).downloadAsync());
+    // [
+    //   require('../assets/album-art-1.jpg'),
+    //   require('../assets/album-art-2.jpg'),
+    //   require('../assets/album-art-3.jpg'),
+    //   require('../assets/album-art-4.jpg'),
+    //   require('../assets/album-art-5.jpg'),
+    //   require('../assets/album-art-6.jpg'),
+    //   require('../assets/album-art-7.jpg'),
+    //   require('../assets/album-art-8.jpg'),
+    // ].map(image => Asset.fromModule(image).downloadAsync());
   }
 
   private persistNavigationState = async (currentIndex: number) => {
@@ -170,7 +172,7 @@ export default class ExampleList extends React.Component<any, State> {
         <StatusBar
           barStyle={Platform.OS === 'ios' ? statusBarStyle : 'light-content'}
         />
-        <KeepAwake />
+        {/* <KeepAwake /> */}
         <View
           style={[
             styles.appbar,
@@ -224,8 +226,8 @@ const styles = StyleSheet.create({
   },
   statusbar: {
     height: Platform.select({
-      android: Constants.statusBarHeight,
-      ios: Platform.Version < 11 ? Constants.statusBarHeight : 0,
+      android: STATUSBAR_HEIGHT,
+      ios: Platform.Version < 11 ? STATUSBAR_HEIGHT : 0,
     }),
   },
   appbar: {
@@ -261,4 +263,4 @@ const styles = StyleSheet.create({
   },
 });
 
-registerRootComponent(ExampleList);
+AppRegistry.registerComponent(appName, () => App);
