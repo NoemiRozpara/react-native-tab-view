@@ -42,6 +42,7 @@ type Props<T extends Route> = PagerCommonProps & {
   sceneContainerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
   gestureHandlerProps: React.ComponentProps<typeof PanGestureHandler>;
+  backend: React.ComponentType;
 };
 
 type State = {

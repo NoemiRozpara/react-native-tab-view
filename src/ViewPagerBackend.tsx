@@ -1,21 +1,53 @@
 import * as React from 'react';
+import { Keyboard } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+import Animated from 'react-native-reanimated';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 
-import { PagerCommonProps, Listener } from './types';
+import {
+  PagerCommonProps,
+  Listener,
+  Route,
+  Layout,
+  NavigationState,
+} from './types';
+
+type EventEmitterProps = {
+  addListener: (type: 'enter', listener: Listener) => void;
+  removeListener: (type: 'enter', listener: Listener) => void;
+};
 
 type Props<T extends Route> = PagerCommonProps & {
   onIndexChange: (index: number) => void;
+  navigationState: NavigationState<T>;
+  layout: Layout;
+  // Clip unfocused views to improve memory usage
+  // Don't enable this on iOS where this is buggy and views don't re-appear
+  removeClippedSubviews?: boolean;
+  children: (
+    props: EventEmitterProps & {
+      // Animated value which represents the state of current index
+      // It can include fractional digits as it represents the intermediate value
+      position: Animated.Node<number>;
+      // Function to actually render the content of the pager
+      // The parent component takes care of rendering
+      render: (children: React.ReactNode) => React.ReactNode;
+      // Callback to call when switching the tab
+      // The tab switch animation is performed even if the index in state is unchanged
+      jumpTo: (key: string) => void;
+    }
+  ) => React.ReactNode;
+  gestureHandlerProps: React.ComponentProps<typeof PanGestureHandler>;
 };
+
+const { Value, cond, divide, multiply } = Animated;
 
 const UNSET = -1;
 
-const DIRECTION_LEFT = 1;
 const DIRECTION_RIGHT = -1;
 
-class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
+export default class Pager<T extends Route> extends React.Component<Props<T>> {
   static defaultProps = {
-    onSwipeStart: () => {},
-    onSwipeEnd: () => {},
     onIndexChange: () => {},
     swipeEnabled: true,
   };
@@ -26,6 +58,14 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
   // Next index of the tabs, updated for navigation from outside (tab press, state update)
   private nextIndex: Animated.Value<number> = new Value(UNSET);
 
+  private layoutWidth = new Value(this.props.layout.width);
+
+  // Current progress of the page (translateX value)
+  private progress = new Value(
+    // Initial value is based on the index and page width
+    this.props.navigationState.index * this.props.layout.width * DIRECTION_RIGHT
+  );
+
   // The position value represent the position of the pager on a scale of 0 - routes.length-1
   // It is calculated based on the translate value and layout width
   // If we don't have the layout yet, we should return the current index
@@ -33,14 +73,6 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
     this.layoutWidth,
     divide(multiply(this.progress, -1), this.layoutWidth),
     this.index
-  );
-
-  private layoutWidth = new Value(this.props.layout.width);
-
-  // Current progress of the page (translateX value)
-  private progress = new Value(
-    // Initial value is based on the index and page width
-    this.props.navigationState.index * this.props.layout.width * DIRECTION_RIGHT
   );
 
   // Listeners for the entered screen
@@ -55,7 +87,9 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
   private jumpTo = (key: string) => {
     const { navigationState, keyboardDismissMode, onIndexChange } = this.props;
 
-    const index = navigationState.routes.findIndex(route => route.key === key);
+    const index = navigationState.routes.findIndex(
+      (route: { key: string }) => route.key === key
+    );
 
     // A tab switch might occur when we're in the middle of a transition
     // In that case, the index might be same as before
@@ -104,19 +138,19 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
   };
 
   onPageScrollStateChanged = e => {
-    switch (e.nativeEvent.state) {
+    const state = e.nativeEvent.state;
+    switch (state) {
       case 'settled':
-        this.props.onSwipeEnd();
+        this.props.onSwipeEnd && this.props.onSwipeEnd();
         return;
       case 'drag':
-        this.props.onSwipeStart();
+        this.props.onSwipeStart && this.props.onSwipeStart();
+        return;
     }
   };
 
   render() {
     const {
-      onSwipeStart,
-      onSwipeEnd,
       keyboardDismissMode,
       swipeEnabled,
       onIndexChange,
@@ -136,7 +170,6 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
             // ViewPager does not accept auto mode
             keyboardDismissMode === 'auto' ? 'on-drag' : keyboardDismissMode
           }
-          onPageScrollStateChanged={onIndexChange}
           onPageScroll={this.updatePosition}
           onPageSelected={onIndexChange}
           onPageScrollStateChanged={this.onPageScrollStateChanged}
@@ -150,5 +183,3 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
     });
   }
 }
-
-export default ViewPagerBackend;
