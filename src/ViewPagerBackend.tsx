@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Keyboard } from 'react-native';
-import ViewPager from '@react-native-community/viewpager';
+// import ViewPager from '@react-native-community/viewpager';
+const ViewPager = require('@react-native-community/viewpager');
 import Animated from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 

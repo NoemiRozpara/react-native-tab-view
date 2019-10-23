@@ -1,1 +1,1 @@
-export { default as ViewPager } from './lib/commonjs/ViewPagerBackend';
+export * from './lib/commonjs/ViewPagerBackend';
