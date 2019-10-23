@@ -95,6 +95,14 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
     }
   };
 
+  updatePosition = () => {
+    this.position = cond(
+      this.layoutWidth,
+      divide(multiply(this.progress, -1), this.layoutWidth),
+      this.index
+    );
+  };
+
   onPageScrollStateChanged = e => {
     switch (e.nativeEvent.state) {
       case 'settled':
@@ -129,46 +137,15 @@ class ViewPagerBackend<T extends Route> extends React.Component<Props<T>> {
             keyboardDismissMode === 'auto' ? 'on-drag' : keyboardDismissMode
           }
           onPageScrollStateChanged={onIndexChange}
-          // onPageScroll={update position reanimated}
+          onPageScroll={this.updatePosition}
           onPageSelected={onIndexChange}
           onPageScrollStateChanged={this.onPageScrollStateChanged}
           scrollEnabled={swipeEnabled}
           orientation={layout.width > layout.height ? 'horizontal' : 'vertical'}
           transitionStyle="scroll"
         >
-          {/* {React.Children.map(children, (child, index) =>
-          React.isValidElement(child) ? (
-            <>
-              {React.cloneElement(child, {
-                key: index,
-              })}
-            </>
-          ) : null
-        )} */}
+          {children}
         </ViewPager>
-        // <PanGestureHandler
-        //   enabled={layout.width !== 0 && swipeEnabled}
-        //   onGestureEvent={this.handleGestureEvent}
-        //   onHandlerStateChange={this.handleGestureEvent}
-        //   activeOffsetX={[-SWIPE_DISTANCE_MINIMUM, SWIPE_DISTANCE_MINIMUM]}
-        //   failOffsetY={[-SWIPE_DISTANCE_MINIMUM, SWIPE_DISTANCE_MINIMUM]}
-        //   {...gestureHandlerProps}
-        // >
-        //   <Animated.View
-        //     removeClippedSubviews={removeClippedSubviews}
-        //     style={[
-        //       styles.container,
-        //       layout.width
-        //         ? {
-        //             width: layout.width * navigationState.routes.length,
-        //             transform: [{ translateX }] as any,
-        //           }
-        //         : null,
-        //     ]}
-        //   >
-        //     {children}
-        //   </Animated.View>
-        // </PanGestureHandler>
       ),
     });
   }
