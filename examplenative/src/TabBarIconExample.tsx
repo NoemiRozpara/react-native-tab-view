@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import {
+  StyleSheet,
+  Text,
+} from 'react-native';
 import {
   TabView,
   TabBar,
@@ -39,8 +41,8 @@ export default class TabBarIconExample extends React.Component<{}, State> {
       index,
     });
 
-  private renderIcon = ({route, color}: {route: Route; color: string}) => (
-    <Ionicons name={route.icon} size={24} color={color} />
+  private renderIcon = () => (
+    <Text>XDD</Text>
   );
 
   private renderTabBar = (

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, I18nManager} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
 import {
   TabView,
   TabBar,
@@ -121,8 +120,8 @@ export default class CustomIndicatorExample extends React.Component<{}, State> {
     );
   };
 
-  private renderIcon = ({route}: {route: Route}) => (
-    <Ionicons name={route.icon} size={24} style={styles.icon} />
+  private renderIcon = () => (
+    <Text>XD</Text>
   );
 
   private renderBadge = ({route}: {route: Route}) => {

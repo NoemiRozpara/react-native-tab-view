@@ -7,7 +7,6 @@ import {
   SceneRendererProps,
 } from 'react-native-tab-view';
 import Animated from 'react-native-reanimated';
-import {Ionicons} from '@expo/vector-icons';
 import Albums from './Shared/Albums';
 import Article from './Shared/Article';
 import Chat from './Shared/Chat';
@@ -65,20 +64,12 @@ export default class CustomTabBarExample extends React.Component<{}, State> {
     return (
       <View style={styles.tab}>
         <Animated.View style={[styles.item, {opacity: inactiveOpacity}]}>
-          <Ionicons
-            name={route.icon}
-            size={26}
-            style={[styles.icon, styles.inactive]}
-          />
+        <Text>XD</Text>
           <Text style={[styles.label, styles.inactive]}>{route.title}</Text>
         </Animated.View>
         <Animated.View
           style={[styles.item, styles.activeItem, {opacity: activeOpacity}]}>
-          <Ionicons
-            name={route.icon}
-            size={26}
-            style={[styles.icon, styles.active]}
-          />
+          <Text>XD</Text>
           <Text style={[styles.label, styles.active]}>{route.title}</Text>
         </Animated.View>
       </View>
